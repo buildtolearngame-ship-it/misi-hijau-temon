@@ -1,0 +1,7 @@
+# berkas kerja pengujian
+_uji_*.json
+*.log
+
+# sistem
+.DS_Store
+Thumbs.db
