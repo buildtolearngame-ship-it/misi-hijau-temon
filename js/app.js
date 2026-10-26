@@ -487,9 +487,10 @@ window.MHT = window.MHT || {};
         text: 'Ronde ini disimpan. Kamu bisa melanjutkannya nanti tanpa kehilangan jatah main.',
         confirmLabel: 'Ya, keluar',
         danger: true,
-        onConfirm: function () {
+        onConfirm: async function () {
           state.round = null;
           $('#feedback').hidden = true;
+          try { await STORE.refreshStats(); } catch (e) { /* tampilkan angka lama */ }
           renderHome();
           show('home');
         }
