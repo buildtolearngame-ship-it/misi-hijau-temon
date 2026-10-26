@@ -1,6 +1,10 @@
 # berkas kerja pengujian
 _uji_*.json
+_uid.txt
 *.log
+
+# hasil build untuk deploy
+dist/
 
 # sistem
 .DS_Store
