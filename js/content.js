@@ -2,12 +2,15 @@
    content.js — bank soal Pilah Sampah
    --------------------------------------------------------------------------
    ATURAN ISI (penting, lihat dokumen arsitektur §14 risiko #1):
-   - Hanya item yang TIDAK ambigu. Kalau satu item bisa diperdebatkan
-     gurunya, jangan dimasukkan.
+   - Hanya item yang TIDAK ambigu. Kalau satu item bisa diperdebatkan,
+     jangan dimasukkan.
    - `reason` maksimal ±10 kata, karena dibaca anak kelas 1.
    - Semua item B3 wajib menyebut "minta bantuan orang dewasa" atau
      "tempat khusus", supaya anak tidak menangani limbah berbahaya.
-   - Daftar ini WAJIB disepakati guru sebelum dipakai di kelas.
+   - Daftar ini WAJIB disetujui admin sebelum dipakai di kelas.
+
+   Berkas ini TIDAK dimuat browser. Sumber kebenaran ada di tabel
+   `game_items`; ubah soal lewat Supabase, bukan lewat berkas ini.
    ========================================================================== */
 
 window.MHT = window.MHT || {};

@@ -6,7 +6,7 @@ window.MHT = window.MHT || {};
 
 MHT.config = {
   APP_NAME: 'Misi Hijau Temon',
-  VERSION: '0.2.0-tahap2',
+  VERSION: '0.3.0-tahap3',
 
   /* ---- Server (arsitektur §6) ----
      Kunci ini memang publik: hanya untuk masuk sebagai pemain anonim.
