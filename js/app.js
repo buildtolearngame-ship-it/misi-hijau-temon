@@ -435,6 +435,81 @@ window.MHT = window.MHT || {};
       '<div class="stat"><span class="stat__value">' + st.accuracy + '%</span><span class="stat__label">Ketepatan</span></div>';
   }
 
+  /* ---------- layar: papan peringkat ---------- */
+
+  let lbLeague = null;
+
+  function sisaHari(iso) {
+    const ms = new Date(iso).getTime() - Date.now();
+    if (!isFinite(ms) || ms <= 0) return 'segera berakhir';
+    const hari = Math.ceil(ms / 86400000);
+    return hari <= 1 ? 'berakhir hari ini' : 'berakhir dalam ' + hari + ' hari';
+  }
+
+  async function renderLeaderboard(league) {
+    const p = STORE.profile();
+    lbLeague = league || lbLeague || (p ? p.league : CFG.LEAGUES[0].id);
+
+    const tabs = $('#lb-tabs');
+    tabs.innerHTML = '';
+    CFG.LEAGUES.forEach(function (lg) {
+      const b = document.createElement('button');
+      b.className = 'lb-tab' + (lg.id === lbLeague ? ' is-active' : '');
+      b.type = 'button';
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-selected', String(lg.id === lbLeague));
+      b.textContent = lg.emoji + ' ' + lg.label.replace('Liga ', '');
+      b.addEventListener('click', function () {
+        if (lg.id !== lbLeague) renderLeaderboard(lg.id);
+      });
+      tabs.appendChild(b);
+    });
+
+    $('#lb-season').textContent = '';
+    $('#lb-me').innerHTML = '';
+    $('#lb-list').innerHTML = '<p class="lb-empty">Memuat…</p>';
+
+    let d;
+    try {
+      d = await STORE.leaderboard(lbLeague);
+    } catch (e) {
+      $('#lb-list').innerHTML = '<p class="lb-empty">' + STORE.friendly(e) + '</p>';
+      return;
+    }
+
+    $('#lb-season').textContent =
+      'Musim ' + d.seasonLabel + ' · ' + sisaHari(d.endsAt) + ' · ' + d.total + ' pemain';
+
+    if (!d.top.length) {
+      $('#lb-list').innerHTML =
+        '<p class="lb-empty">Belum ada yang main di liga ini minggu ini. Jadilah yang pertama!</p>';
+    } else {
+      const medal = { 1: '🥇', 2: '🥈', 3: '🥉' };
+      $('#lb-list').innerHTML = d.top.map(function (r) {
+        const saya = d.me && d.me.inTop && d.me.rank === r.rank && p && r.nickname === p.nickname;
+        return '<div class="lb-row' + (saya ? ' is-me' : '') + (r.rank <= 3 ? ' is-top' : '') + '">' +
+          '<span class="lb-rank">' + (medal[r.rank] || r.rank) + '</span>' +
+          '<span class="lb-avatar" aria-hidden="true">' + avatarById(r.avatarId).emoji + '</span>' +
+          '<span class="lb-name">' + r.nickname + '</span>' +
+          '<span class="lb-xp">' + r.xp + '</span>' +
+        '</div>';
+      }).join('');
+    }
+
+    if (!d.me) {
+      $('#lb-me').innerHTML =
+        '<p class="lb-empty">Kamu belum punya poin di liga ini minggu ini.</p>';
+    } else if (d.me.inTop) {
+      $('#lb-me').innerHTML =
+        '<p class="lb-empty">Kamu di peringkat <strong>' + d.me.rank + '</strong> · ' +
+        d.me.xp + ' Bintang Hijau</p>';
+    } else {
+      $('#lb-me').innerHTML =
+        '<p class="lb-empty">Peringkatmu <strong>' + d.me.rank + '</strong> dari ' + d.total +
+        ' pemain · ' + d.me.xp + ' Bintang Hijau</p>';
+    }
+  }
+
   /* ---------- aksi ---------- */
 
   const actions = {
@@ -477,6 +552,8 @@ window.MHT = window.MHT || {};
     },
 
     'play': function () { startRound(); },
+
+    'open-leaderboard': function () { show('leaderboard'); renderLeaderboard(); },
 
     'next-item': function () { nextItem(); },
 

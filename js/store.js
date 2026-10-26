@@ -167,6 +167,23 @@ MHT.store = (function () {
     };
   }
 
+  /* ---------- papan peringkat ---------- */
+
+  async function leaderboard(league) {
+    const r = await API.rpc('get_leaderboard', { p_league: league, p_limit: 20 });
+
+    return {
+      league: r.league,
+      seasonLabel: r.season_label,
+      endsAt: r.season_ends_at,
+      total: r.total_players || 0,
+      top: (r.top || []).map(function (x) {
+        return { rank: x.rank, nickname: x.nickname, avatarId: x.avatar_id, xp: x.xp };
+      }),
+      me: r.me ? { rank: r.me.rank, xp: r.me.xp, inTop: r.me.in_top } : null
+    };
+  }
+
   /* ---------- statistik & kuota ---------- */
 
   async function refreshStats() {
@@ -226,6 +243,7 @@ MHT.store = (function () {
     startRound: startRound,
     submitAnswer: submitAnswer,
     finishRound: finishRound,
+    leaderboard: leaderboard,
     refreshStats: refreshStats,
     quota: quota,
     canPlay: canPlay,

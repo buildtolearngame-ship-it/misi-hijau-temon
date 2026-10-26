@@ -698,3 +698,91 @@ body {
   .item { padding: 40px 18px; }
   .item__emoji { font-size: 5.2rem; }
 }
+
+/* ==========================================================================
+   Papan peringkat (Tahap 3)
+   ========================================================================== */
+
+.card--thin { min-height: 72px; }
+.card--thin .card__emoji { font-size: 1.7rem; }
+
+.lb-tabs { display: flex; gap: 8px; }
+
+.lb-tab {
+  flex: 1;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--muted);
+  border-radius: 14px;
+  font: inherit;
+  font-size: .8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.lb-tab.is-active {
+  background: var(--green-dark);
+  border-color: var(--green-dark);
+  color: #fff;
+}
+
+.lb-season {
+  margin: -6px 0 0;
+  font-size: .78rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.lb-list { display: flex; flex-direction: column; gap: 8px; }
+
+.lb-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--card);
+  border-radius: 16px;
+  padding: 12px 16px;
+  box-shadow: var(--shadow);
+  border: 2px solid transparent;
+}
+.lb-row.is-top { background: linear-gradient(180deg, #fffdf2, var(--card)); }
+.lb-row.is-me { border-color: var(--green); }
+
+.lb-rank {
+  min-width: 34px;
+  text-align: center;
+  font-weight: 800;
+  font-size: .95rem;
+  color: var(--muted);
+}
+.lb-row.is-top .lb-rank { font-size: 1.15rem; }
+
+.lb-avatar { font-size: 1.5rem; line-height: 1; }
+
+.lb-name {
+  flex: 1;
+  min-width: 0;
+  font-weight: 700;
+  font-size: .95rem;
+  color: var(--green-dark);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lb-xp { font-weight: 800; font-size: .95rem; color: var(--green); }
+
+.lb-me { margin-top: 2px; }
+
+.lb-empty {
+  margin: 0;
+  padding: 16px;
+  text-align: center;
+  font-size: .85rem;
+  line-height: 1.45;
+  color: var(--muted);
+  background: var(--card);
+  border-radius: 16px;
+  border: 1px dashed var(--line);
+}

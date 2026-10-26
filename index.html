@@ -91,6 +91,15 @@
       <span class="card__chevron" aria-hidden="true">›</span>
     </button>
 
+    <button class="card card--thin" data-action="open-leaderboard">
+      <span class="card__emoji" aria-hidden="true">🏆</span>
+      <span class="card__body">
+        <strong>Papan Peringkat</strong>
+        <span>Juara minggu ini di ligamu</span>
+      </span>
+      <span class="card__chevron" aria-hidden="true">›</span>
+    </button>
+
     <div class="quota" id="home-quota"></div>
 
     <div class="spacer"></div>
@@ -156,6 +165,29 @@
 
     <button class="btn btn--danger-ghost" data-action="ask-delete">Hapus progres saya</button>
     <p class="footnote">Menghapus progres tidak bisa dibatalkan.</p>
+  </section>
+
+  <!-- ============ LAYAR 7: PAPAN PERINGKAT ============ -->
+  <section class="screen" data-screen="leaderboard">
+    <header class="screen__head">
+      <button class="btn-icon" data-action="go-home" aria-label="Kembali">←</button>
+      <h2>Papan Peringkat</h2>
+      <span class="btn-icon btn-icon--ghost" aria-hidden="true"></span>
+    </header>
+
+    <div class="lb-tabs" id="lb-tabs" role="tablist" aria-label="Pilih liga"></div>
+
+    <p class="lb-season" id="lb-season"></p>
+
+    <div class="lb-list" id="lb-list" aria-live="polite"></div>
+
+    <div class="lb-me" id="lb-me"></div>
+
+    <div class="spacer"></div>
+
+    <p class="footnote">
+      Dihitung dari Bintang Hijau minggu ini. Papan ini untuk seru-seruan, bukan penilaian resmi.
+    </p>
   </section>
 
 </div>
